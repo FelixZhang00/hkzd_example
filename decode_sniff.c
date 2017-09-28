@@ -20,6 +20,22 @@ int main() {
 
 	pcap_t *pcap_handle;
 	
+	pcap_if_t *interfaces,*temp;
+    int i=0;
+    if(pcap_findalldevs(&interfaces,errbuf)==-1)
+    {
+        printf("\nerror in pcap findall devs");
+        return -1;    
+    }
+
+    printf("\n the interfaces present on the system are:");
+    for(temp=interfaces;temp;temp=temp->next)
+    {
+        printf("\n%d  :  %s",i++,temp->name);
+    }
+    printf("\n");
+    
+
 	device = pcap_lookupdev(errbuf);
 	if(device == NULL)
 		pcap_fatal("pcap_lookupdev", errbuf);
